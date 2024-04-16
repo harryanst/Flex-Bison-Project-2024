@@ -1,1 +1,172 @@
+//dfsdfsdfsdf
+public class Germanios {
+
+
+int x;
+
+double x;
+
+char x;
+
+boolean x;
+
+String x;
+
+Obj obj = new Obj();
+
+int x,y,z;
+
+double x,y,z;
+
+char x,y,z;
+
+boolean x,y,z;
+
+public String x,y,z;
+
+int x = 2;
+
+double x = 2.2d;
+
+char x = '\n';
+
+String x = "Yesir";
+
+private boolean x = true;
+
+int x = 2, y = 123412;
+
+double x = 2.2d, y = 129841.2d;
+
+char x = '\n', y = 'o';
+
+String x = "Yesir", y = "lesgo";
+
+private boolean x = true, y = false;
+
+
+//int x = 12 + 5.4d / y * 3; 
+
+
+Public void main(int x, boolean z ) {
+
+int x;
+
+double x;
+
+char x;
+
+boolean x;
+
+String x;
+
+Obj obj = new Obj();
+
+int x,y,z;
+
+double x,y,z;
+
+char x,y,z;
+
+boolean x,y,z;
+
+String x,y,z;
+
+int x = 2;
+
+double x = 2.2d;
+
+char x = '\n';
+
+String x = "Yesir";
+
+boolean x = true;
+
+int x = 2, y = 123412;
+
+double x = 2.2d, y = 129841.2d;
+
+char x = '\n', y = 'o';
+
+String x = "Yesir", y = "lesgo";
+
+boolean x = true, y = false;
+
+
+//int x = 12 + 5.4d / y * 3; 
+
+
+x = 5;
+y = 27.23d;
+
+
+/*jcneicneicn*/
+meth_call = meth(true, 5, lEMAO);
+xyz = 5 * 7 / 9 + 72;
+mE_EXOYNE_TRLANE = pame.kala(1,2,3,5.5d,x,y,z);
+
+
+//sadfsadf
+if (eimai_oraios == true && den_leo_psemata != 7) {
+out.print("Eimai magkas", xasa, giolo_93);
+}
+//ola ola ola
+else if (o_dean_einai_oraios == true) {
+ypsos_dean = 2.00d;
+x = x + y + 10;
+x = 32.5d + 12;
+}
+else { /*hehehe*/
+for (i=0; i<12; i = i+3){
+xyz = 5 * 7 / 9 + 72;
+out.print("O mpampahs einai kouklos");
+}
+}//a
+
+x = 5;
+y = 27.23d;
+
+//a
+do {
+tranos = '\n';
+den_jero_ti_allh_entolh_na_balo = true;
+}
+while (horizon_mexri_tis_6 == true && 5<7 || 8>x);
+//hehe
+
+
+switch(o_koutras_einai_alvanos) {
+
+case true: //oxi
+out.print("DEN JER TI ALLO NA BALO THEE MOU"); //asd
+
+case false:
+
+default:
+x = 7/9 ;
+break; 
+}
+//hello
+
+return x;
+}
+
+Public boolean main2() { return x + y / 2 * 7;}
+
+public class Germanios2 {}
+
+}//asas
+
+/*lk
+*/
+public class Germanios3 {
+
+Public int main2() { 
+
+ Germanios antikeimeno = new Germanios();     
+
+return 0;
+}
+}
+//asdasd
 
