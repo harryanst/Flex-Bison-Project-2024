@@ -1,5 +1,4 @@
 %{
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -93,8 +92,8 @@ void add_assign(char *name, char *value) {
 
 
 
-// Function to search for the most recently assigned value to a variable (bottom up)
-char *findAssValue(char *name) {
+// Function to search (bottom up) for the most recently assigned value (of type INT_NUM or DOUBLE_NUM) to a variable --> used in <opearations> rule 
+char *findOperationValue(char *name) {
     char foundValue[256] = "";
     int found = 0;
 
@@ -107,7 +106,7 @@ char *findAssValue(char *name) {
         }
     }
     if(!found) {
-	fprintf(stderr, "Variable '%s' must have an assigned integer or double value!\n", name);
+	fprintf(stderr, "  Variable '%s' must have an assigned integer or double value!\n", name);
 	exit(EXIT_FAILURE);
     }	
 }
@@ -838,7 +837,7 @@ operations:  LEFT_BRACKET operations RIGHT_BRACKET    {$$=$2;}
 			| operations MUL operations   {double temp; char *endptr1; char *endptr2; temp = strtod($1, &endptr1) * strtod($3, &endptr2); sprintf($$, "%lf", temp);}
 			| operations DIV operations   {double temp; char *endptr1; char *endptr2; temp = strtod($1, &endptr1) / strtod($3, &endptr2); sprintf($$, "%lf", temp);}
 			| num 			      { strcpy($$, numval); }            
-			| variable                    { strcpy($$, findAssValue($$)); }
+			| variable                    { strcpy($$, findOperationValue($$)); }
 			;
 
 
