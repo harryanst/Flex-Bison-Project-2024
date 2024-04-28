@@ -1,1 +1,96 @@
+//This file is for testing operations
+public class Germanios {
 
+
+private int x;
+public int y,z;
+int o;
+
+int l=5;
+public double result1;
+public double result2;
+public double result3;
+public double result4;
+public double result5;
+public double result6;
+	Private void main() {
+
+	int bob;
+	bob=7;
+                
+	result1 = bob + l * 5 / 4;    
+	result2 = 7 * (5 + 2) ;       
+ 	result3 = (7 + 5) * 2 ;       
+	result4 = bob * (l + 2);     
+	result5 = (bob + l) * 2 ; 
+
+//Uncomment to raise errors
+//result6 = (temperature + l) * 2 ; 
+
+
+	bob = 1;
+	x = 1;
+	y = 2;
+	z = 3;
+	l = 4;
+
+	//n = 0;
+
+	return 1;
+	}
+
+
+	Private void main10() {
+
+	//bob = 10;
+
+	return 1;
+	}
+
+
+	public class C {
+
+		Private void main2() {
+	
+		
+		x = 1;
+
+		//bob = 5;
+
+		y = 2;
+
+		z = 3;
+
+		l = 4;
+
+		
+
+		return 1;
+		}
+
+
+	}
+
+}
+
+
+public class B {
+
+
+		Public void method2() {
+		
+
+		y = 5;
+	
+		l = 2;
+
+		//x = 1;
+
+		//bob = 5;
+			
+		return 1;
+		}
+
+}
+
+/*hehe*/
