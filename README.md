@@ -1,5 +1,12 @@
 # Flex-Bison-Project-2024  💪🐃
 
+<h2>Description  📃</h2>  
+
+
+<br />
+
+
+
 <p><strong>&#x2022;&nbsp; Για να τρέξει το πρόγραμμα γράφουμε ./program (προαιρετικό input). 
 Αν δε διευκρινήσουμε συγκεκριμμένο input file, το πρόγραμμα θα ψάξει να διαβάσει από default ένα file με όνομα file.txt </strong></p>
 
