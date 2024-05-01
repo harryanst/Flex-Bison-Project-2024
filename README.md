@@ -1,7 +1,7 @@
 # Flex-Bison-Project-2024  💪🐃
 
 <h2>Description  📃</h2>  
-
+Building a compiler for an imaginary programming language using Flex lexical analyzer and Bison parser generator for CFLs
 
 <br />
 
