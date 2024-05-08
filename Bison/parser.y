@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_SIZE 1000      //adjust as needed
 
 extern int yylex();
 extern FILE* yyin;
@@ -11,18 +12,17 @@ extern int method_count;
 extern int var_id_count;
 extern char numval[50];    // Variable to store yytext from INT_NUM and DOUBLE_NUM
 
-
-// Maximum number of normal_types (adjust as needed)
-#define MAX_SIZE 1000
-
 int declaration_flag = 0;
-char public_name[256][MAX_SIZE];
 int var_num = 0;
 
-// Data structure to store variable name & expression type
-typedef struct {
+
+
+
+//Structs
+
+typedef struct {		//Data structure to store variable name & expression type
     char name[256];        		// Assuming maximum variable name length of 255 characters
-    char expr_type[20];   	 	// Data type: INT_NUM, DOUBLE_NUM, CHAR_VAR, STRING_VAR, BOOLEAN
+    char expr_type[20];   	 	// Expression type: INT_NUM, DOUBLE_NUM, CHAR_VAR, STRING_VAR, BOOLEAN
 } ExprEntry, DeclaredVar;
 
 
@@ -52,32 +52,257 @@ typedef struct {
 
 
 
-// Creating a table of normal_types and calling it "data_table"
+//Tables
 ExprEntry data_table[MAX_SIZE];
 int expr_count = 0;
-
 
 DeclaredVar declaredVar_table[MAX_SIZE];
 int var_count = 0;
 
+char public_name[256][MAX_SIZE];
 
 M_call m_table[MAX_SIZE];
 int m_count = 0;
 
-
 Var_check id_table[MAX_SIZE];
 int id_count = 0;
 
-
 Extra_var ex_table[MAX_SIZE];
 int ex_count = 0;
-
 
 Assign_record assign_table[MAX_SIZE];
 int ass_count = 0;
 
 
-// Function to add a variable with its INT_NUM or DOUBLE_NUM assignment to the assign_table
+
+//Function Signatures
+void addVar(char *name, char *expr_type);
+int compareAll(ExprEntry *data_table);
+void clearTable(ExprEntry *data_table);
+void add_method(char *modifier, char *type, char *name);
+void check_method(const char *name);
+void add_declaredVar(char *name, char *expr_type);
+char *searchVariable(char *varName);
+void add_id(char *modifier, char *name);
+void add_extra(char *name);
+void clear_extra();
+void check_var_private(char *name);
+void clear_var_private(); 
+void clear_private_methods(); 
+void add_assign(char *name, char *value);
+char *findOperationValue(char *name);
+
+
+
+
+
+// Function to add a normal_type to the normal_types table
+void addVar(char *name, char *expr_type) {
+    if (expr_count < MAX_SIZE) {
+        strcpy(data_table[expr_count].name, name);
+        strcpy(data_table[expr_count].expr_type, expr_type);
+        expr_count++;
+    } else {
+        fprintf(stderr, "Error: Expressions table full\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+
+//Function to compare entries of normal_types table
+int compareAll(ExprEntry *data_table) {
+							
+									
+	// Get the value of the first entry
+	char *firstValue = data_table[0].expr_type;
+
+	// Iterate over the remaining entries and compare their values
+	for (int i = 1; i < MAX_SIZE; i++) {
+		
+		if (strcmp(data_table[i].expr_type, "") != 0){
+			
+			// If any value is different from the first one, return 0
+			if (strcmp(firstValue, data_table[i].expr_type) != 0) {
+								
+			return 0;
+			}
+		}
+		else{continue;}
+	}
+
+	// If all values are equal, return 1
+	return 1;
+
+}
+
+
+
+// Function to clear the normal_types table
+void clearTable(ExprEntry *data_table){
+	 for (int i = 1; i < MAX_SIZE; i++) {  
+		if (strcmp(data_table[i].expr_type, "") != 0){ 
+			 strcpy(data_table[i].name, "");
+			 strcpy(data_table[i].expr_type, "");
+		}
+	}
+}
+
+
+
+// Adds methods to the table
+void add_method(char *modifier, char *type, char *name) {
+	
+	if (m_count < MAX_SIZE) {
+        strcpy(m_table[m_count].method_name, name);
+	strcpy(m_table[m_count].method_type, type);
+	strcpy(m_table[m_count].method_modifier, modifier);
+        m_count++;
+    } else {
+        fprintf(stderr, "Error: Methods table full\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+
+// Checks whether the method called exists
+void check_method(const char *name) {
+    int flag = 0;
+
+    for (int i = 0; i < MAX_SIZE; i++) {
+        if (strcmp(m_table[i].method_name, name) == 0) {
+            flag = 1;
+            break; 
+        }
+    }
+
+    if (flag == 0) {
+        fprintf(stderr, "Method '%s' does not exist!\n", name);
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+
+// Function to add a variable to the declared variables table
+void add_declaredVar(char *name, char *expr_type) {
+    if (expr_count < MAX_SIZE) {
+        strcpy(declaredVar_table[var_count].name, name);
+        strcpy(declaredVar_table[var_count].expr_type, expr_type);
+        var_count++;
+    } else {
+        fprintf(stderr, "Error: Declared variables' table full\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+
+// Function to search for a variable in the array bottom up
+char *searchVariable(char *varName) {
+    char foundVar[256] = "";
+    int found = 0;
+
+    // Start searching from the end of the array
+    for (int i = var_count - 1; i >= 0; i--) {
+        if (strcmp(varName, declaredVar_table[i].name) == 0) {
+            strcpy(foundVar, declaredVar_table[i].name); // Store the found variable name
+            found = 1;
+            return declaredVar_table[i].expr_type;
+        }
+    }
+    if(!found) {
+	return "";
+    }	
+}
+
+
+
+void add_id(char *modifier, char *name) {
+	
+	if (id_count < MAX_SIZE) {
+        strcpy(id_table[id_count].name, name);
+	strcpy(id_table[id_count].modifier, modifier);
+        id_count++;
+    } else {
+        fprintf(stderr, "Error: table full\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+
+void add_extra(char *name) {
+	
+	if (ex_count < MAX_SIZE) {
+        strcpy(ex_table[ex_count].name, name);
+        ex_count++;
+    } else {
+        fprintf(stderr, "Error: table full\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+
+void clear_extra() {
+
+	for(int i = 0; i < MAX_SIZE; i++){
+		strcpy(ex_table[ex_count].name, "");
+	}
+	
+	ex_count = 0;		
+}
+
+
+
+void check_var_private(char *name) {
+    int flag = 0;
+
+    for (int i = 0; i < MAX_SIZE; i++) {
+        if (strcmp(id_table[i].name, name) == 0) {
+            flag = 1;
+            break; 
+        }
+    }
+
+    if (flag == 0) {
+        fprintf(stderr, "Public '%s' does not exist!\n", name);
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+
+void clear_var_private() {
+    for (int i = 0; i < MAX_SIZE; i++) {
+	if (strcmp(id_table[i].modifier, "private") == 0)
+	{
+        strcpy(id_table[i].name, "");
+	strcpy(id_table[i].modifier, "");
+	}
+    }
+}
+
+
+
+// Removes the private methods from the table
+void clear_private_methods() {
+    for (int i = 0; i < MAX_SIZE; ++i) {
+	if (strcmp(m_table[i].method_modifier, "Private") == 0)
+	{
+        strcpy(m_table[i].method_name, "");
+	strcpy(m_table[i].method_type, "");
+	strcpy(m_table[i].method_modifier, "");
+	}
+    }
+    //m_count = 0;
+    //printf("Methods Table for private cleared.\n");
+}
+
+
+
 void add_assign(char *name, char *value) {
 	
 	if (ass_count < MAX_SIZE) {
@@ -113,195 +338,6 @@ char *findOperationValue(char *name) {
 
 
 
-void add_id(char *modifier, char *name) {
-	
-	if (id_count < MAX_SIZE) {
-        strcpy(id_table[id_count].name, name);
-	strcpy(id_table[id_count].modifier, modifier);
-        id_count++;
-    } else {
-        fprintf(stderr, "Error: table full\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
-void add_extra(char *name) {
-	
-	if (ex_count < MAX_SIZE) {
-        strcpy(ex_table[ex_count].name, name);
-        ex_count++;
-    } else {
-        fprintf(stderr, "Error: table full\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
-
-
-void clear_extra() {
-
-	for(int i = 0; i < MAX_SIZE; i++){
-		strcpy(ex_table[ex_count].name, "");
-	}
-	
-	ex_count = 0;		
-}
-
-
-void clear_var_private() {
-    for (int i = 0; i < MAX_SIZE; i++) {
-	if (strcmp(id_table[i].modifier, "private") == 0)
-	{
-        strcpy(id_table[i].name, "");
-	strcpy(id_table[i].modifier, "");
-	}
-    }
-}
-
-
-void check_var_private(char *name) {
-    int flag = 0;
-
-    for (int i = 0; i < MAX_SIZE; i++) {
-        if (strcmp(id_table[i].name, name) == 0) {
-            flag = 1;
-            break; 
-        }
-    }
-
-    if (flag == 0) {
-        fprintf(stderr, "Public '%s' does not exist!\n", name);
-        exit(EXIT_FAILURE);
-    }
-}
-
-
-// Adds methods to the table
-void add_method(char *modifier, char *type, char *name) {
-	
-	if (m_count < MAX_SIZE) {
-        strcpy(m_table[m_count].method_name, name);
-	strcpy(m_table[m_count].method_type, type);
-	strcpy(m_table[m_count].method_modifier, modifier);
-        m_count++;
-    } else {
-        fprintf(stderr, "Error: Methods table full\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
-// Checks whether the method called exists
-void check_method(const char *name) {
-    int flag = 0;
-
-    for (int i = 0; i < MAX_SIZE; i++) {
-        if (strcmp(m_table[i].method_name, name) == 0) {
-            flag = 1;
-            break; 
-        }
-    }
-
-    if (flag == 0) {
-        fprintf(stderr, "Method '%s' does not exist!\n", name);
-        exit(EXIT_FAILURE);
-    }
-}
-
-// Removes the private methods from the table
-void clear_private_methods() {
-    for (int i = 0; i < MAX_SIZE; ++i) {
-	if (strcmp(m_table[i].method_modifier, "Private") == 0)
-	{
-        strcpy(m_table[i].method_name, "");
-	strcpy(m_table[i].method_type, "");
-	strcpy(m_table[i].method_modifier, "");
-	}
-    }
-    //m_count = 0;
-    //printf("Methods Table for private cleared.\n");
-}
-
-
-
-// Function to add a normal_type to the normal_types table
-void addVar(char *name, char *expr_type) {
-    if (expr_count < MAX_SIZE) {
-        strcpy(data_table[expr_count].name, name);
-        strcpy(data_table[expr_count].expr_type, expr_type);
-        expr_count++;
-    } else {
-        fprintf(stderr, "Error: Expressions table full\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
-
-// Function to add a variable to the declared variables table
-void add_declaredVar(char *name, char *expr_type) {
-    if (expr_count < MAX_SIZE) {
-        strcpy(declaredVar_table[var_count].name, name);
-        strcpy(declaredVar_table[var_count].expr_type, expr_type);
-        var_count++;
-    } else {
-        fprintf(stderr, "Error: Declared variables' table full\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
-
-// Function to clear the normal_types table
-void clearTable(ExprEntry *data_table){
-	 for (int i = 1; i < MAX_SIZE; i++) {  
-		if (strcmp(data_table[i].expr_type, "") != 0){ 
-			 strcpy(data_table[i].expr_type, "");
-		}
-	}
-}
-
-//Function to compare entries of normal_types table
-int compareAll(ExprEntry *data_table) {
-							
-									
-	// Get the value of the first entry
-	char *firstValue = data_table[0].expr_type;
-
-	// Iterate over the remaining entries and compare their values
-	for (int i = 1; i < MAX_SIZE; i++) {
-		
-		if (strcmp(data_table[i].expr_type, "") != 0){
-			
-			// If any value is different from the first one, return 0
-			if (strcmp(firstValue, data_table[i].expr_type) != 0) {
-								
-			return 0;
-			}
-		}
-		else{continue;}
-	}
-
-	// If all values are equal, return 1
-	return 1;
-
-}
-
-// Function to search for a variable in the array bottom up
-char *searchVariable(char *varName) {
-    char foundVar[256] = "";
-    int found = 0;
-
-    // Start searching from the end of the array
-    for (int i = var_count - 1; i >= 0; i--) {
-        if (strcmp(varName, declaredVar_table[i].name) == 0) {
-            strcpy(foundVar, declaredVar_table[i].name); // Store the found variable name
-            found = 1;
-            return declaredVar_table[i].expr_type;
-        }
-    }
-    if(!found) {
-	return "";
-    }	
-}
-
 void yyerror(char *s) {
    fprintf(stderr, "Error at line %d: %s\n", line_number, s);
 }
@@ -314,7 +350,6 @@ void yyerror(char *s) {
 %union {
  char *str;
 }
-
 
 %token PUBLIC_CLASS CLASS_NAME LEFT_BRACE RIGHT_BRACE QMARK 
 %token <str> PUBLIC PRIVATE
@@ -343,8 +378,9 @@ void yyerror(char *s) {
 %type <str> operations
 %type <str> num
 
-%%
 
+
+%%
 program: c public_class c
         | program c public_class c
 	;
@@ -458,7 +494,7 @@ variable_declaration:   c variable_modifier expr_type variable extra_variables Q
 
 
 							if(var_id_count == 0) {
-							add_id($2, $4); //Πεταει segmatation
+							add_id($2, $4); 
 				
 							for (int b = 0; b < 100; b++){
 								if (strcmp(ex_table[b].name, "") != 0) {
@@ -619,7 +655,7 @@ variable_declaration:   c variable_modifier expr_type variable extra_variables Q
 
 
 							if(var_id_count == 0) {
-							add_id("public", $3); //Πεταει segmatation
+							add_id("public", $3); 
 				
 							for (int b = 0; b < 100; b++){
 								if (strcmp(ex_table[b].name, "") != 0) {
@@ -934,10 +970,8 @@ c: comment | comment c | ;
 
 comment: SINGLE_COMMENT | MULTILINE_COMMENT ;
 
-
-
-
 %%
+
 
 
 int main(int argc, char** argv) { 
