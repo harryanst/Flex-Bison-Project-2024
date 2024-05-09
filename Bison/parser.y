@@ -20,14 +20,14 @@ int var_num = 0;
 
 //Structs
 
-typedef struct {		//Data structure to store variable name & expression type
+typedef struct {		        // Data structure to store variable name & expression type
     char name[256];        		// Assuming maximum variable name length of 255 characters
     char expr_type[20];   	 	// Expression type: INT_NUM, DOUBLE_NUM, CHAR_VAR, STRING_VAR, BOOLEAN
 } ExprEntry, DeclaredVar;
 
 
-//Data structure for a method
-typedef struct {
+
+typedef struct {                        // Data structure to store a method's modifier, type, name
 	char method_name[256];
 	char method_type[256];
 	char method_modifier[256];
@@ -96,7 +96,6 @@ char *findOperationValue(char *name);
 
 
 
-// Function to add a normal_type to the normal_types table
 void addVar(char *name, char *expr_type) {
     if (expr_count < MAX_SIZE) {
         strcpy(data_table[expr_count].name, name);
@@ -110,7 +109,6 @@ void addVar(char *name, char *expr_type) {
 
 
 
-//Function to compare entries of normal_types table
 int compareAll(ExprEntry *data_table) {
 							
 									
@@ -138,7 +136,6 @@ int compareAll(ExprEntry *data_table) {
 
 
 
-// Function to clear the normal_types table
 void clearTable(ExprEntry *data_table){
 	 for (int i = 1; i < MAX_SIZE; i++) {  
 		if (strcmp(data_table[i].expr_type, "") != 0){ 
@@ -199,7 +196,7 @@ void add_declaredVar(char *name, char *expr_type) {
 
 
 
-// Function to search for a variable in the array bottom up
+// Function to search for a variable in the declaredVar_table bottom up
 char *searchVariable(char *varName) {
     char foundVar[256] = "";
     int found = 0;
