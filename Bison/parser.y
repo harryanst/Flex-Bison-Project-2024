@@ -387,8 +387,6 @@ public_class: PUBLIC_CLASS CLASS_NAME LEFT_BRACE class_block RIGHT_BRACE
 
 			if (method_count == 0) {
 
-			// printf("\n original method \n");
-
 			clear_private_methods();
 			clear_var_private();
 
