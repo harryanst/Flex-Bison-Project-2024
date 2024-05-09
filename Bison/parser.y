@@ -294,8 +294,6 @@ void clear_private_methods() {
 	strcpy(m_table[i].method_modifier, "");
 	}
     }
-    //m_count = 0;
-    //printf("Methods Table for private cleared.\n");
 }
 
 
