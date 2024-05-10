@@ -34,18 +34,18 @@ typedef struct {                        // Data structure to store a method's mo
 } M_call;
 
 
-typedef struct {
+typedef struct {			// Data structure to store a variable's modifier, name
 	char modifier[256];
 	char name[256];
 } Var_check;
 
 
-typedef struct {
+typedef struct {			// Data structure to store the name of extra variables declared
 	char name[256];
 } Extra_var;
 
 
-typedef struct {
+typedef struct {			// Data structure to store a variable's name, value after assignment
 	char name[256];
 	char value[50];
 } Assign_record;
