@@ -948,7 +948,7 @@ variable_modifier: PUBLIC | PRIVATE ;
 return_type: INT | DOUBLE | CHAR | BOOLEAN | STRING | VOID ; 
 
 
-expr_type: INT | DOUBLE | CHAR | BOOLEAN | STRING ;
+data_type: INT | DOUBLE | CHAR | BOOLEAN | STRING ;
 
 
 method_modifier: M_PUBLIC | M_PRIVATE ;
