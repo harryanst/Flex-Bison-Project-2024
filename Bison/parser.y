@@ -366,7 +366,7 @@ void yyerror(char *s) {
 
 %type <str> variable
 %type <str> expr_type
-%type <str> normal_type                  //only normal_type assignments with same line variable declarations
+%type <str> normal_type                  
 %type <str> method_modifier
 %type <str> return_type
 %type <str> variable_modifier
