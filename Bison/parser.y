@@ -789,8 +789,8 @@ method_declaration: method_modifier return_type variable LEFT_BRACKET parameters
 	;
 
 
-parameters: expr_type variable
-	| expr_type variable COMMA parameters
+parameters: data_type variable
+	| data_type variable COMMA parameters
 	|;
 
 
