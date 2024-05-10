@@ -378,7 +378,7 @@ void yyerror(char *s) {
 %%
 program: c public_class c
         | program c public_class c
-	| 
+	| error '\n' {yyerrok;}
 	;
 
 public_class: PUBLIC_CLASS CLASS_NAME LEFT_BRACE class_block RIGHT_BRACE
