@@ -20,32 +20,32 @@ int var_num = 0;
 
 //Structs
 
-typedef struct {		//Data structure to store variable name & expression type
+typedef struct {		        // Data structure to store variable name & expression type
     char name[256];        		// Assuming maximum variable name length of 255 characters
     char expr_type[20];   	 	// Expression type: INT_NUM, DOUBLE_NUM, CHAR_VAR, STRING_VAR, BOOLEAN
 } ExprEntry, DeclaredVar;
 
 
-//Data structure for a method
-typedef struct {
+
+typedef struct {                        // Data structure to store a method's modifier, type, name
 	char method_name[256];
 	char method_type[256];
 	char method_modifier[256];
 } M_call;
 
 
-typedef struct {
+typedef struct {			// Data structure to store a variable's modifier, name
 	char modifier[256];
 	char name[256];
 } Var_check;
 
 
-typedef struct {
+typedef struct {			// Data structure to store the name of extra variables declared
 	char name[256];
 } Extra_var;
 
 
-typedef struct {
+typedef struct {			// Data structure to store a variable's name, value after assignment
 	char name[256];
 	char value[50];
 } Assign_record;
@@ -96,7 +96,6 @@ char *findOperationValue(char *name);
 
 
 
-// Function to add a normal_type to the normal_types table
 void addVar(char *name, char *expr_type) {
     if (expr_count < MAX_SIZE) {
         strcpy(data_table[expr_count].name, name);
@@ -110,7 +109,6 @@ void addVar(char *name, char *expr_type) {
 
 
 
-//Function to compare entries of normal_types table
 int compareAll(ExprEntry *data_table) {
 							
 									
@@ -138,7 +136,6 @@ int compareAll(ExprEntry *data_table) {
 
 
 
-// Function to clear the normal_types table
 void clearTable(ExprEntry *data_table){
 	 for (int i = 1; i < MAX_SIZE; i++) {  
 		if (strcmp(data_table[i].expr_type, "") != 0){ 
@@ -199,7 +196,7 @@ void add_declaredVar(char *name, char *expr_type) {
 
 
 
-// Function to search for a variable in the array bottom up
+// Function to search for a variable in the declaredVar_table bottom up
 char *searchVariable(char *varName) {
     char foundVar[256] = "";
     int found = 0;
@@ -297,8 +294,6 @@ void clear_private_methods() {
 	strcpy(m_table[i].method_modifier, "");
 	}
     }
-    //m_count = 0;
-    //printf("Methods Table for private cleared.\n");
 }
 
 
@@ -370,8 +365,8 @@ void yyerror(char *s) {
 
 
 %type <str> variable
-%type <str> expr_type
-%type <str> normal_type                  //only normal_type assignments with same line variable declarations
+%type <str> data_type
+%type <str> normal_type                  
 %type <str> method_modifier
 %type <str> return_type
 %type <str> variable_modifier
@@ -383,8 +378,7 @@ void yyerror(char *s) {
 %%
 program: c public_class c
         | program c public_class c
-        | error '\n' {yyerrok;}
-	      ;
+	;
 
 public_class: PUBLIC_CLASS CLASS_NAME LEFT_BRACE class_block RIGHT_BRACE
 
@@ -392,8 +386,6 @@ public_class: PUBLIC_CLASS CLASS_NAME LEFT_BRACE class_block RIGHT_BRACE
 		method_count = method_count - 1;
 
 			if (method_count == 0) {
-
-			// printf("\n original method \n");
 
 			clear_private_methods();
 			clear_var_private();
@@ -417,7 +409,7 @@ variable_declarations: variable_declaration | variable_declaration variable_decl
 
 
 
-variable_declaration:   c variable_modifier expr_type variable extra_variables QMARK c
+variable_declaration:   c variable_modifier data_type variable extra_variables QMARK c
 			{
 				char temp_type[20];
 				strcpy(temp_type, "");
@@ -478,7 +470,7 @@ variable_declaration:   c variable_modifier expr_type variable extra_variables Q
 			}
 			
 						| c CLASS_NAME variable EQUAL object_instance QMARK c
-						| c variable_modifier expr_type variable EQUAL normal_type extra_assigned_variables QMARK c
+						| c variable_modifier data_type variable EQUAL normal_type extra_assigned_variables QMARK c
 						{		
  							
 							 if (strcmp($6, "INT_NUM") == 0 | strcmp($6, "DOUBLE_NUM") == 0){
@@ -581,7 +573,7 @@ variable_declaration:   c variable_modifier expr_type variable extra_variables Q
 						
 						}
 
-| c expr_type variable extra_variables QMARK c
+| c data_type variable extra_variables QMARK c
 			{
 				char temp_type[20];
 				strcpy(temp_type, "");
@@ -641,7 +633,7 @@ variable_declaration:   c variable_modifier expr_type variable extra_variables Q
 
 			}
 			
-						| c expr_type variable EQUAL normal_type extra_assigned_variables QMARK c
+						| c data_type variable EQUAL normal_type extra_assigned_variables QMARK c
 						{		
  							
 							 if (strcmp($5, "INT_NUM") == 0 | strcmp($5, "DOUBLE_NUM") == 0){
@@ -797,8 +789,8 @@ method_declaration: method_modifier return_type variable LEFT_BRACKET parameters
 	;
 
 
-parameters: expr_type variable
-	| expr_type variable COMMA parameters
+parameters: data_type variable
+	| data_type variable COMMA parameters
 	|;
 
 
@@ -956,7 +948,7 @@ variable_modifier: PUBLIC | PRIVATE ;
 return_type: INT | DOUBLE | CHAR | BOOLEAN | STRING | VOID ; 
 
 
-expr_type: INT | DOUBLE | CHAR | BOOLEAN | STRING ;
+data_type: INT | DOUBLE | CHAR | BOOLEAN | STRING ;
 
 
 method_modifier: M_PUBLIC | M_PRIVATE ;
