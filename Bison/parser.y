@@ -365,7 +365,7 @@ void yyerror(char *s) {
 
 
 %type <str> variable
-%type <str> expr_type
+%type <str> data_type
 %type <str> normal_type                  
 %type <str> method_modifier
 %type <str> return_type
@@ -409,7 +409,7 @@ variable_declarations: variable_declaration | variable_declaration variable_decl
 
 
 
-variable_declaration:   c variable_modifier expr_type variable extra_variables QMARK c
+variable_declaration:   c variable_modifier data_type variable extra_variables QMARK c
 			{
 				char temp_type[20];
 				strcpy(temp_type, "");
@@ -470,7 +470,7 @@ variable_declaration:   c variable_modifier expr_type variable extra_variables Q
 			}
 			
 						| c CLASS_NAME variable EQUAL object_instance QMARK c
-						| c variable_modifier expr_type variable EQUAL normal_type extra_assigned_variables QMARK c
+						| c variable_modifier data_type variable EQUAL normal_type extra_assigned_variables QMARK c
 						{		
  							
 							 if (strcmp($6, "INT_NUM") == 0 | strcmp($6, "DOUBLE_NUM") == 0){
@@ -573,7 +573,7 @@ variable_declaration:   c variable_modifier expr_type variable extra_variables Q
 						
 						}
 
-| c expr_type variable extra_variables QMARK c
+| c data_type variable extra_variables QMARK c
 			{
 				char temp_type[20];
 				strcpy(temp_type, "");
@@ -633,7 +633,7 @@ variable_declaration:   c variable_modifier expr_type variable extra_variables Q
 
 			}
 			
-						| c expr_type variable EQUAL normal_type extra_assigned_variables QMARK c
+						| c data_type variable EQUAL normal_type extra_assigned_variables QMARK c
 						{		
  							
 							 if (strcmp($5, "INT_NUM") == 0 | strcmp($5, "DOUBLE_NUM") == 0){
