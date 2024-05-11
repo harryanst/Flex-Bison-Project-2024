@@ -147,7 +147,7 @@ void clearTable(ExprEntry *data_table){
 
 
 
-// Adds methods to the table
+// Adds methods to the m_table
 void add_method(char *modifier, char *type, char *name) {
 	
 	if (m_count < MAX_SIZE) {
@@ -284,7 +284,7 @@ void clear_var_private() {
 
 
 
-// Removes the private methods from the table
+// Removes the private methods from the m_table
 void clear_private_methods() {
     for (int i = 0; i < MAX_SIZE; ++i) {
 	if (strcmp(m_table[i].method_modifier, "Private") == 0)
