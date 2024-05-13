@@ -1,0 +1,103 @@
+//This is a comment outside of classes
+public class Germanios {   //big class
+
+
+//Single Declarations
+int x;
+double x;
+char x;
+String x;
+boolean x;
+Obj obj = new Obj();
+
+
+Public void main(int x, boolean z ) {
+
+//Single Declarations
+int x;
+double x;
+char x;
+String x;
+boolean x;
+Obj obj = new Obj();
+
+
+
+// Commands
+
+
+// Assignments
+x = 2;
+y = 2.2d;
+z = '\n';
+symbol2 = 'O';
+name = "my_name";
+valid = false;
+invalid = true;
+xyz = 5 * 7 / 9 + 72;
+meth_call = meth(true, 5, lEMAO);
+method_access = object.its_method(1,2,3,5.5d,x,y,z);
+
+
+//this is a comment
+if (humidity == true && temperature != 7) {
+out.print("This is the right one", weather, variants);
+}
+//this is a comment
+else if (rain == true) {
+height = 2.00d;
+x = x + y + 10;
+x = 32.5d + 12;
+}
+else { /*commenting...*/
+for (i=0; i<12; i = i+3){
+xyz = 5 * 7 / 9 + 72;
+out.print("Inside the for");
+}
+}//this is a comment
+
+
+//this is a comment
+do {
+symbol = '\n';
+occupied = true;
+}
+while (occupied == true && 5<7 || 8>x);
+//this is a comment
+
+
+switch(temp) {
+
+case true: //this is a comment
+out.print("It is true"); //commenting
+
+case false:
+
+default:
+x = 7/9 ;
+break; 
+}
+//this is a comment
+
+return x;
+}
+
+Public boolean main2() { return x + y / 2 * 7;}
+
+public class Germanios2 {}
+
+}
+/*comment
+*/
+
+
+public class Germanios3 {
+
+Public int main2() { 
+
+ Germanios antikeimeno = new Germanios();     
+
+return 0;
+}
+}
+//end comment

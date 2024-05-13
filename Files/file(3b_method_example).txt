@@ -1,0 +1,80 @@
+//This file is for testing scopes of methods
+public class Germanios {
+
+
+	Private void main() {return 1;}
+
+
+	Public void main2() {return 1;}
+
+
+	Public void main3() {return 1;}
+
+
+	public class C {
+
+
+		Private void main4() {return 1;}
+
+
+	
+		Public void method() {
+		
+			main();
+		
+			main2();
+
+			main3();
+
+			main4();
+
+			return 1;
+		}
+
+
+	}
+
+	
+	public class D {
+
+
+		Public void method1() {
+		
+			main();
+		
+			main4();
+			
+			return 1;
+		}
+
+	
+		public class E {Public void method3() {main();  return 1;}}
+
+
+	}
+
+
+}
+
+
+public class B {
+
+
+		Public void method2() {
+		
+			method();
+
+			method1();
+
+			main3();
+		
+			//main();
+			
+			//main4();
+			
+			return 1;
+		}
+
+}
+
+/*hehe*/
